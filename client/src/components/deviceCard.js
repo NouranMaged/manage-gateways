@@ -15,6 +15,7 @@ import {
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import DevicesController from "../services/controller/devicesController";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import { formatDate } from "../utils/utils";
 
 const DeviceCard = (props) => {
   const [data, setData] = useState([]);
@@ -52,14 +53,10 @@ const DeviceCard = (props) => {
         <Grid container spacing={6}>
           {data?.map((element, index) => {
             return (
-              <Grid item md={3} xs={12} sm={6} key={index}>
+              <Grid item md={3} xs={12} sm={6} key={index} mt={5}>
                 <Card
                   sx={{
                     minWidth: 275,
-                    border: "solid",
-                    borderWidth: "1px",
-                    borderColor: "grey",
-                    marginTop: "5px",
                   }}
                   key={index}
                 >
@@ -76,18 +73,22 @@ const DeviceCard = (props) => {
                   />
                   <CardContent>
                     <Typography>
-                      <strong>Date Created At: </strong> {element.dateCreated}
+                      <strong>Date Created: </strong>{" "}
+                      {formatDate(element.dateCreated)}
                     </Typography>
+                    <Stack direction={"row"} spacing={1}>
+                      <Typography>
+                        <strong>Status: </strong>
+                      </Typography>
+                      <Typography component={"span"}>
+                        {element.status == "online" ? (
+                          <Chip label={element.status} color={"success"} />
+                        ) : (
+                          <Chip label={element.status} />
+                        )}
+                      </Typography>
+                    </Stack>
                     <Typography>
-                      <strong>Status: </strong>
-                      {element.status == "online" ? (
-                        <Chip label={element.status} color={"success"} />
-                      ) : (
-                        <Chip label={element.status} />
-                      )}
-                    </Typography>
-                    <Typography>
-                      {" "}
                       <strong>Vendor: </strong> {element.vendor}
                     </Typography>
                   </CardContent>

@@ -2,13 +2,8 @@ import React, { useState } from "react";
 import {
   Box,
   Button,
-  Card,
-  Container,
-  FormControl,
   FormControlLabel,
-  Grid,
   Modal,
-  Paper,
   Radio,
   RadioGroup,
   Stack,
@@ -62,31 +57,40 @@ const DeviceForm = ({ gate, setOpenForm, openForm }) => {
     e.preventDefault();
     if (validateEmptyFields(formDetails).length !== 0) {
       validateEmptyFields(formDetails).map((field) => {
+        console.log(field);
         setError({ ...error, [field]: true });
       });
     }
-
+    console.log(validateEmptyFields(formDetails).length);
     if (validateEmptyFields(formDetails).length == 0) {
-      DevicesController.addDevice(formDetails).then(
-        (data) => handleClose(),
-        setAlertData({
-          show: true,
-          severity: "success",
-          msg: "Gate Adedd Succefully!",
-        }),
+      DevicesController.addDevice(formDetails).then((data) => {
+        console.log(data);
 
-        setTimeout(() => {
+        if (data.errorMsg) {
           setAlertData({
-            show: false,
-            severity: "",
-            msg: "",
+            show: true,
+            severity: "warning",
+            msg: "Error! Invalid Data!",
           });
-        }, 2000)
-      );
+        } else {
+          setAlertData({
+            show: true,
+            severity: "success",
+            msg: "Device Adedd Succefully!",
+          });
+          setTimeout(() => {
+            setAlertData({
+              show: false,
+              severity: "",
+              msg: "",
+            });
+            handleClose();
+          }, 2000);
+        }
+      });
     }
   };
-  console.log(validateEmptyFields(formDetails));
-  console.log(error);
+
   return (
     <Modal
       open={openForm}
@@ -95,6 +99,8 @@ const DeviceForm = ({ gate, setOpenForm, openForm }) => {
       aria-describedby="modal-modal-description"
     >
       <Box sx={style}>
+        {alertData.show && <Alerts alertData={alertData} />}
+
         <form onSubmit={handleSubmit}>
           <Stack spacing={2} width={400}>
             <Typography variant="h6">Add New Device: </Typography>
@@ -129,8 +135,8 @@ const DeviceForm = ({ gate, setOpenForm, openForm }) => {
               name="dateCreated"
               value={formDetails.ipAddress}
               onChange={handleChange}
-              helperText={error.dateCreated == true && "Field Cannot be empty!"}
-              error={error.dateCreated == true && true}
+              // helperText={error.dateCreated == true && "Field Cannot be empty!"}
+              // error={error.dateCreated == true && true}
             />
 
             <Typography variant="h6">Status: </Typography>

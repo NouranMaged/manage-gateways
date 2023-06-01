@@ -25,9 +25,15 @@ const GatesTable = ({ allGates }) => {
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Gate Name</TableCell>
-            <TableCell align="right">Serial Number</TableCell>
-            <TableCell align="right">IP Address</TableCell>
+            <TableCell>
+              <strong>Gate Name</strong>
+            </TableCell>
+            <TableCell align="right">
+              <strong>Serial Number</strong>
+            </TableCell>
+            <TableCell align="right">
+              <strong>IP Address</strong>
+            </TableCell>
             <TableCell align="right"></TableCell>
             <TableCell align="right"></TableCell>
           </TableRow>
