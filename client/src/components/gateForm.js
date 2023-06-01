@@ -3,8 +3,9 @@ import { Button, Card, Stack, TextField } from "@mui/material";
 import GatesController from "../services/controller/gatesController";
 import Alerts from "./alerts";
 import { validateIpAddress, validateEmptyFields } from "../utils/utils";
+import { useGatesHooks } from "../hooks.js/hooks";
 
-const GateForm = () => {
+const GateForm = ({ getAllGates }) => {
   const [formDetails, setFormDetails] = useState({
     name: "",
     ipAddress: "",
@@ -46,13 +47,12 @@ const GateForm = () => {
       validateEmptyFields(formDetails).length == 0
     ) {
       GatesController.addGate(formDetails).then(
-        (data) =>
-          data &&
-          setAlertData({
-            show: true,
-            severity: "success",
-            msg: "Gate Adedd Succefully!",
-          }),
+        (data) => data && getAllGates(),
+        setAlertData({
+          show: true,
+          severity: "success",
+          msg: "Gate Adedd Succefully!",
+        }),
         setFormDetails({
           name: "",
           ipAddress: "",

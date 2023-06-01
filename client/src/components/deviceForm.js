@@ -26,8 +26,15 @@ const style = {
   p: 4,
 };
 
-const DeviceForm = ({ gate, setOpenForm, openForm }) => {
+const DeviceForm = ({
+  gate,
+  setOpenForm,
+  openForm,
+  getAllDevices,
+  deviceId,
+}) => {
   const handleClose = () => setOpenForm(false);
+
   const [formDetails, setFormDetails] = useState({
     gateId: gate._id,
     uid: "",
@@ -57,15 +64,12 @@ const DeviceForm = ({ gate, setOpenForm, openForm }) => {
     e.preventDefault();
     if (validateEmptyFields(formDetails).length !== 0) {
       validateEmptyFields(formDetails).map((field) => {
-        console.log(field);
         setError({ ...error, [field]: true });
       });
     }
-    console.log(validateEmptyFields(formDetails).length);
     if (validateEmptyFields(formDetails).length == 0) {
       DevicesController.addDevice(formDetails).then((data) => {
-        console.log(data);
-
+        getAllDevices(deviceId);
         if (data.errorMsg) {
           setAlertData({
             show: true,

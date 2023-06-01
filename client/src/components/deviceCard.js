@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React from "react";
 import {
   CardContent,
   Typography,
@@ -17,23 +16,10 @@ import DevicesController from "../services/controller/devicesController";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { formatDate } from "../utils/utils";
 
-const DeviceCard = (props) => {
-  const [data, setData] = useState([]);
-  const params = useParams();
-  const id = params.id;
-
-  useEffect(() => {
-    getAllDevices();
-  }, []);
-  const getAllDevices = () => {
-    DevicesController.getAllDevices().then((data) => {
-      let associatedDevices = data.data.filter((x) => x.gateId === id);
-      setData(associatedDevices);
-    });
-  };
+const DeviceCard = ({ setOpenForm, devices, getAllDevices, deviceId }) => {
   const handleDeleteDevice = (id) => {
     DevicesController.deleteDevice(id).then((data) => {
-      console.log(data);
+      getAllDevices(deviceId);
     });
   };
   return (
@@ -41,17 +27,17 @@ const DeviceCard = (props) => {
       <Stack direction={"row"} spacing={20}>
         <Typography variant="h4">Associated Peripheral Devices</Typography>
         <Button
-          onClick={() => props.setOpenForm(true)}
+          onClick={() => setOpenForm(true)}
           variant="contained"
           startIcon={<AddCircleOutlineIcon />}
-          disabled={data?.length >= 10 ? true : false}
+          disabled={devices?.length >= 10 ? true : false}
         >
           Add Peripheral Devices
         </Button>
       </Stack>
-      {data?.length != 0 ? (
+      {devices?.length != 0 ? (
         <Grid container spacing={6}>
-          {data?.map((element, index) => {
+          {devices?.map((element, index) => {
             return (
               <Grid item md={3} xs={12} sm={6} key={index} mt={5}>
                 <Card
@@ -61,7 +47,7 @@ const DeviceCard = (props) => {
                   key={index}
                 >
                   <CardHeader
-                    title={"uid: " + element.uid}
+                    title={"UID: " + element.uid}
                     action={
                       <IconButton
                         aria-label="settings"

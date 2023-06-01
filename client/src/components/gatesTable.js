@@ -1,23 +1,25 @@
-import * as React from "react";
-
+import React from "react";
 import {
   IconButton,
   Table,
   TableBody,
   TableCell,
-  Link,
   TableHead,
   TableContainer,
   Paper,
   TableRow,
+  Button,
 } from "@mui/material";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import GatesController from "../services/controller/gatesController";
+import { useNavigate } from "react-router-dom";
 
-const GatesTable = ({ allGates }) => {
+const GatesTable = ({ getAllGates, allGates }) => {
+  const navigate = useNavigate();
+
   const handleDeleteGate = (id) => {
-    GatesController.deleteGate(id).then((data) => {
-      console.log(data);
+    GatesController.deleteGate(id).then(async (data) => {
+      getAllGates();
     });
   };
   return (
@@ -39,7 +41,7 @@ const GatesTable = ({ allGates }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {allGates.map((gate, index) => (
+          {allGates?.map((gate, index) => (
             <TableRow
               key={index}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -50,9 +52,13 @@ const GatesTable = ({ allGates }) => {
               <TableCell align="right">{gate.serialNumber}</TableCell>
               <TableCell align="right">{gate.ipAddress}</TableCell>
               <TableCell align="right">
-                <Link size="small" href={`/single-gate/${gate._id}`}>
+                <Button
+                  size="small"
+                  href={`/single-gate/${gate._id}`}
+                  onClick={() => navigate(`/single-gate/${gate._id}`)}
+                >
                   Show Details
-                </Link>
+                </Button>
               </TableCell>
               <TableCell align="right">
                 <IconButton
