@@ -1,0 +1,29 @@
+//get all gates
+GET http://localhost:3000/gates
+
+###
+//get one gate
+GET http://localhost:3000/gates/:id
+
+###
+//add one gate
+POST http://localhost:3000/gates
+
+###
+//delete one gate
+DELETE  http://localhost:3000/gates/:id
+###
+
+//update one gate
+PATCH  http://localhost:3000/gates/:id
+
+###
+//get all devices
+GET http://localhost:3000/devices
+###
+//add one device
+POST http://localhost:3000/devices
+
+###
+//delete one gate
+DELETE  http://localhost:3000/devices/:id
