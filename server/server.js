@@ -20,4 +20,4 @@ app.use("/gates", gatesRouter);
 const devicesRouter = require("./routes/devices");
 app.use("/devices", devicesRouter);
 
-app.listen(5000, () => console.log("Server Started"));
+app.listen(3000, () => console.log("Server Started"));

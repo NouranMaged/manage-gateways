@@ -22,9 +22,9 @@ services:
     # Mapping the client directory on the host machine to the /app directory on the container.
 
     # volumes:
-    #   - ./client:/app
+    # - ./client:/app
 
-    #   - ./app/node_modules
+    # - ./client/node_modules
 
     # Allows you to run container in detached mode.
 
@@ -41,8 +41,17 @@ services:
 
     ports:
       - "5000:5000"
-
+    env_file:
+      - ./server/.env
+    depends_on:
+      - mongo
     # volumes:
     #   - ./server:/app
 
-    #   - ./app/node_modules
+    # - ./server/node_modules
+
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - 27017:27017
