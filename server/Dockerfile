@@ -1,18 +1,7 @@
 
-FROM node:14.17-alpine
-
-# We use nodemon to restart the server every time there's a change
-RUN npm install -g nodemon
-
+FROM node:alpine
 WORKDIR /app
-
-COPY package.json .
-
-RUN npm install
-
+COPY package*.json .
+RUN npm ci
 COPY . .
-
-EXPOSE 5000
-
-# Use script specified in package,json
-CMD ["npm", "run", "dev"]
+CMD ["npm","run","dev"]

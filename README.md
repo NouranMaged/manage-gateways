@@ -1,10 +1,5 @@
 # Gateways
 
-![test workflow](https://github.com/NouranMaged/manage-gateways/actions/workflows/test.yml/badge.svg)
-![GitHub top language](https://img.shields.io/github/languages/top/NouranMaged/manage-gateways?style=flat)
-![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/NouranMaged/manage-gateways?style=flat)
-![Lines of code](https://img.shields.io/tokei/lines/github/NouranMaged/manage-gateways?style=flat)
-
 ## Description
 
 This sample project is managing gateways - master devices that control multiple peripheral devices.

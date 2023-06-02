@@ -4,9 +4,17 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 
-mongoose.connect(process.env.DATABASE_URL, {
-  useNewUrlParser: true,
-});
+mongoose
+  .connect(process.env.MONGODB_URI, {
+    dbName: process.env.DB_NAME,
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    // useFindAndModify: true,
+  })
+  .then(() => {
+    console.log("Mongodb connected....");
+  })
+  .catch((err) => console.log(err.message));
 const db = mongoose.connection;
 
 db.on("error", (error) => console.error(error));

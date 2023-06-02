@@ -6,52 +6,38 @@ version: "3.8"
 
 services:
   client:
-    # Telling docker-compose to build the client image using the Dockerfile in the client directory.
-
     build: ./client
-
-    # Giving the container a name.
-
     container_name: clientapp_c
-
-    # Mapping the port 3000 on the host machine to the port 3000 on the container.
-
     ports:
-      - "3000:3000"
-
-    # Mapping the client directory on the host machine to the /app directory on the container.
-
-    # volumes:
-    # - ./client:/app
-
-    # - ./client/node_modules
-
-    # Allows you to run container in detached mode.
-
+      - "5000:3000"
     stdin_open: true
-
     tty: true
 
+  # server services
   server:
-    # Telling docker-compose to build the client image using the Dockerfile in the server directory.
-
     build: ./server
-
     container_name: serverapp_c
-
     ports:
-      - "5000:5000"
-    env_file:
-      - ./server/.env
+      - 3000:3000
+    volumes:
+      - .:/server
+    environment:
+      PORT: 3000
+      MONGODB_URI: mongodb://mongo_db:27017
+      DB_NAME: my_db
+      NAME: My Name
     depends_on:
-      - mongo
-    # volumes:
-    #   - ./server:/app
+      - mongo_db
 
-    # - ./server/node_modules
-
-  mongo:
-    image: mongo
+  # MongoDB services
+  mongo_db:
+    container_name: db_container
+    image: mongo:latest
     restart: always
+    volumes:
+      - mongo_db:/data/db
     ports:
       - 27017:27017
+
+volumes:
+  mongo_db: {}

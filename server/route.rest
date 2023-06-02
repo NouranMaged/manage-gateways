@@ -8,6 +8,13 @@ GET http://localhost:3000/gates/:id
 ###
 //add one gate
 POST http://localhost:3000/gates
+Content-Type: "application/json"
+
+{
+  "name": "dddddd",
+  "serialNumber": "dddddd",
+  "ipAddress": "dddddd""dddddd"
+}
 
 ###
 //delete one gate
