@@ -4,7 +4,7 @@ import GatesController from "../services/controller/gatesController";
 import { validateIpAddress, validateEmptyFields } from "../utils/utils";
 import { useAlerts } from "../hooks/hooks";
 
-const GateForm = ({ getAllGates }) => {
+const GateForm = (getAllGates) => {
   const [formDetails, setFormDetails] = useState({
     name: "",
     ipAddress: "",
@@ -48,24 +48,27 @@ const GateForm = ({ getAllGates }) => {
     ) {
       GatesController.addGate(formDetails).then((data) => {
         if (data.errorMsg) {
-          data && getAllGates();
           setAlertData({
             show: true,
             severity: "warning",
             msg: "Error! Invalid Data!",
           });
         } else {
-          setAlertData({
-            show: true,
-            severity: "success",
-            msg: "Gate Adedd Succefully!",
+          if (data) {
+            setAlertData({
+              show: true,
+              severity: "success",
+              msg: "Gate Adedd Succefully!",
+            });
+            getAllGates();
+          }
+
+          setFormDetails({
+            name: "",
+            ipAddress: "",
+            serialNumber: "",
           });
         }
-        setFormDetails({
-          name: "",
-          ipAddress: "",
-          serialNumber: "",
-        });
       });
     }
   };
@@ -78,6 +81,7 @@ const GateForm = ({ getAllGates }) => {
           <Stack direction="row">
             <TextField
               id="standard-basic"
+              data-testid="input-field"
               variant="standard"
               label="Serial Number"
               placeholder="Insert Serial Number"
@@ -93,6 +97,7 @@ const GateForm = ({ getAllGates }) => {
           <Stack direction="row">
             <TextField
               id="standard-basic"
+              data-testid="input-field"
               variant="standard"
               label="Gate Name"
               placeholder="Insert Gate Name"
@@ -106,6 +111,7 @@ const GateForm = ({ getAllGates }) => {
           <Stack direction="row">
             <TextField
               id="standard-basic"
+              data-testid="input-field"
               variant="standard"
               label="IP Address"
               placeholder="Insert IP Address"
@@ -116,7 +122,7 @@ const GateForm = ({ getAllGates }) => {
               error={error.ipAddress == true && true}
             />
           </Stack>
-          <Button variant="contained" type={"submit"}>
+          <Button variant="contained" type={"submit"} data-testid="submit-btn">
             Save Gateway
           </Button>
         </Stack>

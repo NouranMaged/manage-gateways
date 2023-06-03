@@ -37,7 +37,7 @@ const DeviceForm = ({
   const handleClose = () => setOpenForm(false);
   const { setAlertData, alert } = useAlerts();
   const [formDetails, setFormDetails] = useState({
-    gateId: gate._id,
+    gateId: "",
     uid: "",
     vendor: "",
     dateCreated: moment().format("YYYY-MM-DD"),
@@ -60,6 +60,7 @@ const DeviceForm = ({
 
     setFormDetails({
       ...formDetails,
+      gateId: gate._id,
       [name]: value,
     });
   };
@@ -146,6 +147,8 @@ const DeviceForm = ({
               name="dateCreated"
               label="Date Created At"
               type="date"
+              data-testid="input-date"
+              placeholder="hello"
               defaultValue={formDetails.dateCreated}
               onChange={handleChange}
               InputLabelProps={{

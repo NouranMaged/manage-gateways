@@ -23,5 +23,6 @@ Devices API: (GET,PUT,ADD,DELETE)
 
 1. Clone this repo: `git clone https://github.com/NouranMaged/manage-gateways`
 2. Move to the cloned directory: `cd manage-gateways/server`
-3. Run `npm run start`
-4. The server should be ready on http://localhost:3000
+3. Run `npm install`
+4. Run `npm run start`
+5. The server should be ready on http://localhost:3000

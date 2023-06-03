@@ -7,7 +7,7 @@ const useGatesHooks = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [allGates, setAllgates] = useState([]);
 
-  const getAllGates = useCallback(async () => {
+  const getAllGates = () => {
     setIsLoading(true);
     GatesController.getAllGates().then((data) => {
       if (data) {
@@ -15,7 +15,7 @@ const useGatesHooks = () => {
         setIsLoading(false);
       }
     });
-  }, []);
+  };
 
   return {
     setAllgates,
