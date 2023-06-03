@@ -1,4 +1,4 @@
-# Gateways
+# Managing Gateways
 
 ## Description
 
@@ -14,8 +14,7 @@ Each gateway has:
 
 - a unique serial number (string),
 - human-readable name (string),
-- IPv4 address (to be validated),
-- multiple associated peripheral devices.
+- IPv4 address (to be validated)
 
 Each peripheral device has:
 
@@ -38,22 +37,12 @@ Each peripheral device has:
 
 1. Rename the file `.env.template` to `.env` and adjust the variables values properly
 2. Run `docker-compose up`
-3. The app should be ready on http://localhost
+3. The frontend app should be ready on http://localhost:5000 and server works on http://localhost:3000
 
-### Development environment
+### FrontEnd Part Development environment
 
-1. Rename the file `.env.template` to `.env` and adjust the variables values properly
-2. Execute `npm install` to get all dependencies including dev ones
-3. Run `docker-compose -f docker-compose.dev.yml up` which mounts a volume so you can make changes and the container
-   stays in sync.
-4. The app should be ready on http://localhost
-
-### Testing environment
-
-1. Rename the file `.env.template` to `.env-test` and adjust the variables values properly
-2. Run `docker-compose -f docker-compose.test.yml run node npm run test`
-
-#### Github action
-
-A Github actions is configured to be executed on every push so tests must be passed for the push (or PR) to be
-effective.
+1. Clone this repo: `git clone https://github.com/NouranMaged/manage-gateways`
+2. Move to the cloned directory: `cd manage-gateways/client`
+3. Run `npm install`
+4. Run `npm run start`
+5. The server should be ready on http://localhost:urlocalport
