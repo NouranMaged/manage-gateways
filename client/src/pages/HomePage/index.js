@@ -6,15 +6,12 @@ import { useGatesHooks } from "../../hooks.js/hooks";
 
 const HomePage = () => {
   const { getAllGates, allGates } = useGatesHooks();
-
   useEffect(() => {
     getAllGates();
   }, []);
-
   return (
     <Container>
       <Typography variant="h4">Gateways</Typography>
-      <Typography variant="h6">Add a new Gateways:</Typography>
 
       {/* Form to add new Gate */}
       <GateForm allGates={allGates} getAllGates={getAllGates} />

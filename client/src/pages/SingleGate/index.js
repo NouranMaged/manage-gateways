@@ -22,7 +22,7 @@ const SingleGate = () => {
 
   const getSingleGate = () => {
     GatesController.getSingleGate(deviceId).then((data) => {
-      data && setData(data.data);
+      data && setData(data?.data);
     });
   };
 
@@ -34,18 +34,17 @@ const SingleGate = () => {
         </IconButton>
         <Typography variant="h4">Gateway Details</Typography>
       </Stack>
-
       <Paper sx={{ padding: "20px", marginTop: "20px", marginBottom: "20px" }}>
         <Typography>
           <strong>Gate Name: </strong>
-          {data.name}
+          {data?.name}
         </Typography>
         <Typography>
-          <strong>Serial Number: </strong> {data.serialNumber}
+          <strong>Serial Number: </strong> {data?.serialNumber}
         </Typography>
         <Typography>
           <strong>IP Address: </strong>
-          {data.ipAddress}
+          {data?.ipAddress}
         </Typography>
       </Paper>
       {openForm && (
@@ -57,7 +56,6 @@ const SingleGate = () => {
           deviceId={deviceId}
         />
       )}
-
       <DeviceCard
         devices={devices}
         setOpenForm={setOpenForm}

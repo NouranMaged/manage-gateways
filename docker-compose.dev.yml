@@ -10,6 +10,8 @@ services:
     container_name: clientapp_c
     ports:
       - "5000:3000"
+    volumes:
+      - ./:/app
     stdin_open: true
     tty: true
 
@@ -21,6 +23,8 @@ services:
       - 3000:3000
     # volumes:
     #   - .:/server
+    volumes:
+      - ./:/app
     environment:
       PORT: 3000
       MONGODB_URI: mongodb://mongo_db:27017

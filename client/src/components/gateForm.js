@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { Button, Card, Stack, TextField } from "@mui/material";
+import { Button, Card, Stack, TextField, Typography } from "@mui/material";
 import GatesController from "../services/controller/gatesController";
-import Alerts from "./alerts";
 import { validateIpAddress, validateEmptyFields } from "../utils/utils";
-import { useGatesHooks } from "../hooks.js/hooks";
+import { useAlerts } from "../hooks.js/hooks";
 
 const GateForm = ({ getAllGates }) => {
   const [formDetails, setFormDetails] = useState({
@@ -11,11 +10,7 @@ const GateForm = ({ getAllGates }) => {
     ipAddress: "",
     serialNumber: "",
   });
-  const [alertData, setAlertData] = useState({
-    show: false,
-    severity: "",
-    msg: "",
-  });
+  const { setAlertData, alert } = useAlerts();
   const [error, setError] = useState({
     name: "",
     ipAddress: "",
@@ -46,32 +41,34 @@ const GateForm = ({ getAllGates }) => {
       validateIpAddress(formDetails.ipAddress) &&
       validateEmptyFields(formDetails).length == 0
     ) {
-      GatesController.addGate(formDetails).then(
-        (data) => data && getAllGates(),
-        setAlertData({
-          show: true,
-          severity: "success",
-          msg: "Gate Adedd Succefully!",
-        }),
+      GatesController.addGate(formDetails).then((data) => {
+        if (data.errorMsg) {
+          data && getAllGates();
+          setAlertData({
+            show: true,
+            severity: "warning",
+            msg: "Error! Invalid Data!",
+          });
+        } else {
+          setAlertData({
+            show: true,
+            severity: "success",
+            msg: "Gate Adedd Succefully!",
+          });
+        }
         setFormDetails({
           name: "",
           ipAddress: "",
           serialNumber: "",
-        }),
-        setTimeout(() => {
-          setAlertData({
-            show: false,
-            severity: "",
-            msg: "",
-          });
-        }, 3000)
-      );
+        });
+      });
     }
   };
   return (
     <Card sx={{ padding: "20px" }}>
-      {alertData.show && <Alerts alertData={alertData} />}
+      <Typography variant="h6">Add a new Gateway:</Typography>
       <form onSubmit={handleSubmit}>
+        {alert}
         <Stack spacing={4}>
           <Stack direction="row">
             <TextField

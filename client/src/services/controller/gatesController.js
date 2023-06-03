@@ -25,7 +25,6 @@ GatesController.getAllGates = () => {
       })
       .catch((error) => {
         resolve({
-          data: [],
           errorMsg: error,
         });
       });
@@ -55,7 +54,6 @@ GatesController.addGate = (queryData) => {
 
       .catch((error) => {
         resolve({
-          data: [],
           errorMsg: error,
         });
       });
@@ -84,7 +82,6 @@ GatesController.getSingleGate = (id) => {
       })
       .catch((error) => {
         resolve({
-          data: [],
           errorMsg: error,
         });
       });
@@ -114,7 +111,6 @@ GatesController.deleteGate = (id, queryData) => {
 
       .catch((error) => {
         resolve({
-          data: [],
           errorMsg: error,
         });
       });

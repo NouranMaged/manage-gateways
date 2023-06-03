@@ -10,10 +10,9 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import Alerts from "./alerts";
 import DevicesController from "../services/controller/devicesController";
 import { validateEmptyFields } from "../utils/utils";
-
+import { useAlerts } from "../hooks.js/hooks";
 const style = {
   position: "absolute",
   top: "50%",
@@ -34,7 +33,7 @@ const DeviceForm = ({
   deviceId,
 }) => {
   const handleClose = () => setOpenForm(false);
-
+  const { setAlertData, alert } = useAlerts();
   const [formDetails, setFormDetails] = useState({
     gateId: gate._id,
     uid: "",
@@ -48,11 +47,7 @@ const DeviceForm = ({
     dateCreated: "",
     status: "",
   });
-  const [alertData, setAlertData] = useState({
-    show: false,
-    severity: "",
-    msg: "",
-  });
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormDetails({
@@ -83,11 +78,6 @@ const DeviceForm = ({
             msg: "Device Adedd Succefully!",
           });
           setTimeout(() => {
-            setAlertData({
-              show: false,
-              severity: "",
-              msg: "",
-            });
             handleClose();
           }, 2000);
         }
@@ -103,8 +93,7 @@ const DeviceForm = ({
       aria-describedby="modal-modal-description"
     >
       <Box sx={style}>
-        {alertData.show && <Alerts alertData={alertData} />}
-
+        {alert}
         <form onSubmit={handleSubmit}>
           <Stack spacing={2} width={400}>
             <Typography variant="h6">Add New Device: </Typography>
