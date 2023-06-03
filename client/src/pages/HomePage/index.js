@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Container, Typography } from "@mui/material";
 import GateForm from "../../components/gateForm";
 import GatesTable from "../../components/gatesTable";
-import { useGatesHooks } from "../../hooks.js/hooks";
+import { useGatesHooks } from "../../hooks/hooks";
 
 const HomePage = () => {
   const { getAllGates, allGates } = useGatesHooks();

@@ -14,7 +14,7 @@ import {
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import GatesController from "../services/controller/gatesController";
 import { useNavigate } from "react-router-dom";
-import { useGatesHooks } from "../hooks.js/hooks";
+import { useGatesHooks } from "../hooks/hooks";
 
 const GatesTable = ({ getAllGates, allGates }) => {
   const navigate = useNavigate();

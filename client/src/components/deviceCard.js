@@ -16,8 +16,8 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import DevicesController from "../services/controller/devicesController";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { formatDate } from "../utils/utils";
-import { useDevicesHooks } from "../hooks.js/hooks";
-import { useAlerts } from "../hooks.js/hooks";
+import { useDevicesHooks } from "../hooks/hooks";
+import { useAlerts } from "../hooks/hooks";
 
 const DeviceCard = ({ setOpenForm, devices, getAllDevices, deviceId }) => {
   const { isLoading } = useDevicesHooks();

@@ -5,7 +5,7 @@ import { Container, IconButton, Paper, Stack, Typography } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import DeviceForm from "../../components/deviceForm";
 import DeviceCard from "../../components/deviceCard";
-import { useDevicesHooks } from "../../hooks.js/hooks";
+import { useDevicesHooks } from "../../hooks/hooks";
 
 const SingleGate = () => {
   const { getAllDevices, devices } = useDevicesHooks();

@@ -13,7 +13,7 @@ import {
 
 import DevicesController from "../services/controller/devicesController";
 import { validateEmptyFields } from "../utils/utils";
-import { useAlerts } from "../hooks.js/hooks";
+import { useAlerts } from "../hooks/hooks";
 import moment from "moment";
 const style = {
   position: "absolute",
