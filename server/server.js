@@ -8,7 +8,7 @@ mongoose
   .connect(process.env.MONGODB_URI, {
     dbName: process.env.DB_NAME,
     useNewUrlParser: true,
-    useUnifiedTopology: true,
+    // useUnifiedTopology: true,
     // useFindAndModify: true,
   })
   .then(() => {
@@ -20,7 +20,14 @@ const db = mongoose.connection;
 db.on("error", (error) => console.error(error));
 db.once("open", () => console.log("Connected to Database"));
 
+//Accepting cors
+const cors = require("cors");
 app.use(express.json());
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 
 const gatesRouter = require("./routes/gates");
 app.use("/gates", gatesRouter);

@@ -15,6 +15,6 @@ Gates.addGate = (queryData) => {
 //   return Services.patchData(`/gates/${id}`, queryData);
 // };
 Gates.deleteGate = (id, queryData) => {
-  return Services.deleteData(`gates/${id}`, queryData);
+  return Services.deleteData(`/gates/${id}`, queryData);
 };
 export default Gates;

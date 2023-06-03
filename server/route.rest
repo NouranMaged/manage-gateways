@@ -4,17 +4,17 @@ GET http://localhost:3000/gates
 ###
 //get one gate
 GET http://localhost:3000/gates/:id
-
+//647a8572e206845382da5eaf
 ###
 //add one gate
 POST http://localhost:3000/gates
-Content-Type: "application/json"
+# Content-Type: "application/json"
 
-{
-  "name": "dddddd",
-  "serialNumber": "dddddd",
-  "ipAddress": "dddddd""dddddd"
-}
+# {
+#   "name": "dddddd",
+#   "serialNumber": "dddddd",
+#   "ipAddress": "dddddddddddd"
+#}
 
 ###
 //delete one gate
@@ -30,6 +30,14 @@ GET http://localhost:3000/devices
 ###
 //add one device
 POST http://localhost:3000/devices
+# Content-Type: "application/json"
+
+# {
+#   "gateId": "dddddd",
+#   "status": "dddddd",
+#   "uid": "dddddd""dddddd",
+#   "vendor": "dddddd""dddddd"
+# }
 
 ###
 //delete one gate

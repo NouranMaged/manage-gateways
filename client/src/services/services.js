@@ -1,10 +1,14 @@
 let Services = {};
-
+// const url = process.env.SERVER_URI + process.env.SERVER_PORT;
+const url = "http://localhost:3000";
 Services.getData = async (queryUrl) => {
-  return fetch(queryUrl, {
+  return fetch(url + queryUrl, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
+      accept: "application/json",
+      mode: "cors",
+      "Access-Control-Allow-Origin": "*",
     },
   })
     .then(function (response) {
@@ -24,7 +28,7 @@ Services.getData = async (queryUrl) => {
     });
 };
 Services.postData = async (queryUrl, queryData) => {
-  return fetch(queryUrl, {
+  return fetch(url + queryUrl, {
     method: "POST",
     withCredentials: true,
     headers: {
@@ -45,9 +49,8 @@ Services.postData = async (queryUrl, queryData) => {
       }
     });
 };
-Services.deleteData = async function (queryUrl, queryData) {
-  this.queryUrl = queryUrl;
-  return fetch(queryUrl, {
+Services.deleteData = async (queryUrl, queryData) => {
+  return fetch(url + queryUrl, {
     method: "DELETE",
     withCredentials: true,
     headers: {
@@ -72,10 +75,11 @@ Services.deleteData = async function (queryUrl, queryData) {
     });
 };
 Services.patchData = async (queryUrl, queryData) => {
-  return fetch(queryUrl, {
+  return fetch(url + queryUrl, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
+      accept: "application/json",
     },
     body: queryData ? JSON.stringify(queryData) : null,
   })
