@@ -1,6 +1,5 @@
 let Services = {};
 // const url = process.env.SERVER_URI + process.env.SERVER_PORT;
-console.log(process.env);
 const url = "http://localhost:3000";
 Services.getData = async (queryUrl) => {
   return fetch(url + queryUrl, {

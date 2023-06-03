@@ -10,9 +10,11 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+
 import DevicesController from "../services/controller/devicesController";
 import { validateEmptyFields } from "../utils/utils";
 import { useAlerts } from "../hooks.js/hooks";
+import moment from "moment";
 const style = {
   position: "absolute",
   top: "50%",
@@ -38,7 +40,7 @@ const DeviceForm = ({
     gateId: gate._id,
     uid: "",
     vendor: "",
-    dateCreated: "",
+    dateCreated: moment().format("YYYY-MM-DD"),
     status: "",
   });
   const [error, setError] = useState({
@@ -50,6 +52,11 @@ const DeviceForm = ({
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    setError({
+      ...setError,
+      [name]: "",
+    });
+
     setFormDetails({
       ...formDetails,
       [name]: value,
@@ -103,7 +110,7 @@ const DeviceForm = ({
               placeholder="Insert UID"
               variant="outlined"
               name="uid"
-              value={formDetails.serialNumber}
+              value={formDetails.uid}
               onChange={handleChange}
               helperText={error.uid == true && "Field Cannot be empty!"}
               error={error.uid == true && true}
@@ -115,26 +122,28 @@ const DeviceForm = ({
               placeholder="Insert vendor"
               variant="outlined"
               name="vendor"
-              value={formDetails.name}
+              value={formDetails.vendor}
               onChange={handleChange}
               helperText={error.vendor == true && "Field Cannot be empty!"}
               error={error.vendor == true && true}
             />
             <TextField
-              id="outlined-basic"
-              label="Date Created At"
-              placeholder="Insert Date Created At"
-              variant="outlined"
+              id="date"
               name="dateCreated"
-              value={formDetails.ipAddress}
+              label="Date Created At"
+              type="date"
+              defaultValue={formDetails.dateCreated}
               onChange={handleChange}
-              // helperText={error.dateCreated == true && "Field Cannot be empty!"}
-              // error={error.dateCreated == true && true}
+              InputLabelProps={{
+                shrink: true,
+              }}
             />
-
             <Typography variant="h6">Status: </Typography>
+
             {error.status == true && (
-              <Typography color={"red"}>{error.status}</Typography>
+              <Typography color={"red"} sx={{ fontSize: "12px" }}>
+                Field Cannot be empty!
+              </Typography>
             )}
             <RadioGroup
               aria-labelledby="demo-radio-buttons-group-label"
