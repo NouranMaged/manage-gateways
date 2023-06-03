@@ -52,6 +52,7 @@ const DeviceForm = ({
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    //empty error msgs when user type
     setError({
       ...setError,
       [name]: "",
@@ -64,11 +65,19 @@ const DeviceForm = ({
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    //check that UID is a number
+    if (isNaN(formDetails.uid)) {
+      setError({ uid: "UID should be a number!" });
+    }
+
+    //check that all fields are not empty
     if (validateEmptyFields(formDetails).length !== 0) {
       validateEmptyFields(formDetails).map((field) => {
         setError({ ...error, [field]: true });
       });
     }
+
+    //Add device call
     if (validateEmptyFields(formDetails).length == 0) {
       DevicesController.addDevice(formDetails).then((data) => {
         getAllDevices(deviceId);
@@ -104,6 +113,8 @@ const DeviceForm = ({
         <form onSubmit={handleSubmit}>
           <Stack spacing={2} width={400}>
             <Typography variant="h6">Add New Device: </Typography>
+
+            {/* UID FIELD */}
             <TextField
               id="outlined-basic"
               label="UID"
@@ -116,6 +127,7 @@ const DeviceForm = ({
               error={error.uid == true && true}
             />
 
+            {/* VENDOR FIELD */}
             <TextField
               id="outlined-basic"
               label="Vendor"
@@ -127,6 +139,8 @@ const DeviceForm = ({
               helperText={error.vendor == true && "Field Cannot be empty!"}
               error={error.vendor == true && true}
             />
+
+            {/* CREATED AT FIELD  */}
             <TextField
               id="date"
               name="dateCreated"
@@ -138,8 +152,9 @@ const DeviceForm = ({
                 shrink: true,
               }}
             />
-            <Typography variant="h6">Status: </Typography>
 
+            {/* STATUS FIELD */}
+            <Typography variant="h6">Status: </Typography>
             {error.status == true && (
               <Typography color={"red"} sx={{ fontSize: "12px" }}>
                 Field Cannot be empty!

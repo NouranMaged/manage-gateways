@@ -29,14 +29,19 @@ const GateForm = ({ getAllGates }) => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    //validate IP Address
     if (!validateIpAddress(formDetails.ipAddress)) {
       setError({ ...error, ipAddress: true });
     }
+
+    //validate All fields are filled
     if (validateEmptyFields(formDetails).length !== 0) {
       validateEmptyFields(formDetails).map((field) => {
         setError({ ...error, [field]: true });
       });
     }
+
+    //handle Add gate request
     if (
       validateIpAddress(formDetails.ipAddress) &&
       validateEmptyFields(formDetails).length == 0

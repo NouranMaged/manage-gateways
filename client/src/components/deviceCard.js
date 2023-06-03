@@ -44,7 +44,6 @@ const DeviceCard = ({ setOpenForm, devices, getAllDevices, deviceId }) => {
   return (
     <Box>
       {alert}
-
       <Stack direction={"row"} spacing={20}>
         <Typography variant="h4">Associated Peripheral Devices</Typography>
         <Button
