@@ -4,7 +4,7 @@ import GatesController from "../services/controller/gatesController";
 import { validateIpAddress, validateEmptyFields } from "../utils/utils";
 import { useAlerts } from "../hooks/hooks";
 
-const GateForm = (getAllGates) => {
+const GateForm = ({ getAllGates }) => {
   const [formDetails, setFormDetails] = useState({
     name: "",
     ipAddress: "",
