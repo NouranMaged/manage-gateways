@@ -30,14 +30,12 @@ Each peripheral device has:
 
 ## How to?
 
+### Production environment
 1. Clone this repo: `git clone https://github.com/NouranMaged/manage-gateways`
 2. Move to the cloned directory: `cd manage-gateways`
-
-### Production environment
-
-1. Rename the file `.env.template` to `.env` and adjust the variables values properly
-2. Run `docker-compose up`
-3. The frontend app should be ready on http://localhost:5000 and server works on http://localhost:3000
+3. Run `docker-compose build`
+4. Run `docker-compose up`
+5. The frontend app should be ready on http://localhost:5000 and server works on http://localhost:3000
 
 ### FrontEnd Part Development environment
 
