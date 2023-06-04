@@ -72,7 +72,6 @@ const GatesTable = ({ getAllGates, allGates }) => {
                   <TableCell align="right">
                     <Button
                       size="small"
-                      href={`/single-gate/${gate._id}`}
                       onClick={() => navigate(`/single-gate/${gate._id}`)}
                     >
                       Show Details
