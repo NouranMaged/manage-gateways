@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   Box,
   Button,
@@ -13,8 +13,8 @@ import {
 
 import DevicesController from "../services/controller/devicesController";
 import { validateEmptyFields } from "../utils/utils";
-import { useAlerts } from "../hooks/hooks";
 import moment from "moment";
+import SnackBar from "./snackBar";
 const style = {
   position: "absolute",
   top: "50%",
@@ -27,21 +27,16 @@ const style = {
   p: 4,
 };
 
-const DeviceForm = ({
-  gate,
-  setOpenForm,
-  openForm,
-  getAllDevices,
-  deviceId,
-}) => {
+const DeviceForm = ({ gate, setOpenForm, openForm, getSingleGate }) => {
   const handleClose = () => setOpenForm(false);
-  const { setAlertData, alert } = useAlerts();
+  const snackBarRef = useRef(null);
   const [formDetails, setFormDetails] = useState({
     gateId: "",
     uid: "",
     vendor: "",
     dateCreated: moment().format("YYYY-MM-DD"),
     status: "",
+    gateway: {},
   });
   const [error, setError] = useState({
     uid: "",
@@ -61,6 +56,7 @@ const DeviceForm = ({
     setFormDetails({
       ...formDetails,
       gateId: gate._id,
+      gateway: gate._id,
       [name]: value,
     });
   };
@@ -81,15 +77,15 @@ const DeviceForm = ({
     //Add device call
     if (validateEmptyFields(formDetails).length == 0) {
       DevicesController.addDevice(formDetails).then((data) => {
-        getAllDevices(deviceId);
+        getSingleGate();
         if (data.errorMsg) {
-          setAlertData({
+          snackBarRef.current.alterToggle({
             show: true,
             severity: "warning",
             msg: "Error! Invalid Data!",
           });
         } else {
-          setAlertData({
+          snackBarRef.current.alterToggle({
             show: true,
             severity: "success",
             msg: "Device Adedd Succefully!",
@@ -110,7 +106,7 @@ const DeviceForm = ({
       aria-describedby="modal-modal-description"
     >
       <Box sx={style}>
-        {alert}
+        <SnackBar ref={snackBarRef} />
         <form onSubmit={handleSubmit}>
           <Stack spacing={2} width={400}>
             <Typography variant="h6">Add New Device: </Typography>

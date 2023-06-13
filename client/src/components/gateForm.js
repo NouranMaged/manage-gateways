@@ -1,16 +1,16 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Button, Card, Stack, TextField, Typography } from "@mui/material";
 import GatesController from "../services/controller/gatesController";
 import { validateIpAddress, validateEmptyFields } from "../utils/utils";
-import { useAlerts } from "../hooks/hooks";
+import SnackBar from "./snackBar";
 
 const GateForm = ({ getAllGates }) => {
+  const snackBarRef = useRef(null);
   const [formDetails, setFormDetails] = useState({
     name: "",
     ipAddress: "",
     serialNumber: "",
   });
-  const { setAlertData, alert } = useAlerts();
   const [error, setError] = useState({
     name: "",
     ipAddress: "",
@@ -48,18 +48,19 @@ const GateForm = ({ getAllGates }) => {
     ) {
       GatesController.addGate(formDetails).then((data) => {
         if (data.errorMsg) {
-          setAlertData({
+          snackBarRef.current.alterToggle({
             show: true,
             severity: "warning",
             msg: "Error! Invalid Data!",
           });
         } else {
           if (data) {
-            setAlertData({
+            snackBarRef.current.alterToggle({
               show: true,
               severity: "success",
               msg: "Gate Adedd Succefully!",
             });
+
             getAllGates();
           }
 
@@ -76,7 +77,7 @@ const GateForm = ({ getAllGates }) => {
     <Card sx={{ padding: "20px" }}>
       <Typography variant="h6">Add a new Gateway:</Typography>
       <form onSubmit={handleSubmit}>
-        {alert}
+        <SnackBar ref={snackBarRef} />
         <Stack spacing={4}>
           <Stack direction="row">
             <TextField

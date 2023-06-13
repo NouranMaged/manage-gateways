@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import {
   CardContent,
   Typography,
@@ -16,24 +16,23 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import DevicesController from "../services/controller/devicesController";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { formatDate } from "../utils/utils";
-import { useDevicesHooks } from "../hooks/hooks";
-import { useAlerts } from "../hooks/hooks";
+import SnackBar from "./snackBar";
 
-const DeviceCard = ({ setOpenForm, devices, getAllDevices, deviceId }) => {
-  const { isLoading } = useDevicesHooks();
-  const { setAlertData, alert } = useAlerts();
+const DeviceCard = ({ setOpenForm, devices, isLoading, getSingleGate }) => {
+  const snackBarRef = useRef(null);
 
   const handleDeleteDevice = (id) => {
     DevicesController.deleteDevice(id).then((data) => {
       if (!data.errorMsg) {
-        getAllDevices(deviceId);
-        setAlertData({
+        getSingleGate();
+        snackBarRef.current.alterToggle({
           show: true,
           severity: "success",
           msg: "Device Deleted Succefully!",
         });
       } else {
-        setAlertData({
+        getSingleGate();
+        snackBarRef.current.alterToggle({
           show: true,
           severity: "warning",
           msg: "Error! Device can't be Deleted !",
@@ -43,7 +42,7 @@ const DeviceCard = ({ setOpenForm, devices, getAllDevices, deviceId }) => {
   };
   return (
     <Box>
-      {alert}
+      <SnackBar ref={snackBarRef} />
       <Stack direction={"row"} spacing={20}>
         <Typography variant="h4">Associated Peripheral Devices</Typography>
         <Button

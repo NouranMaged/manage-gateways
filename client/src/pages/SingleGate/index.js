@@ -5,27 +5,26 @@ import { Container, IconButton, Paper, Stack, Typography } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import DeviceForm from "../../components/deviceForm";
 import DeviceCard from "../../components/deviceCard";
-import { useDevicesHooks } from "../../hooks/hooks";
 
 const SingleGate = () => {
-  const { getAllDevices, devices } = useDevicesHooks();
   const [data, setData] = useState({});
   const [openForm, setOpenForm] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const params = useParams();
   const deviceId = params.id;
   const navigate = useNavigate();
 
   useEffect(() => {
     getSingleGate();
-    getAllDevices(deviceId);
   }, []);
 
   const getSingleGate = () => {
+    setIsLoading(true);
     GatesController.getSingleGate(deviceId).then((data) => {
-      data && setData(data?.data);
+      setData(data?.data);
+      setIsLoading(false);
     });
   };
-
   return (
     <Container>
       <Stack direction={"row"}>
@@ -52,15 +51,16 @@ const SingleGate = () => {
           gate={data}
           setOpenForm={setOpenForm}
           openForm={openForm}
-          getAllDevices={getAllDevices}
           deviceId={deviceId}
+          getSingleGate={getSingleGate}
         />
       )}
       <DeviceCard
-        devices={devices}
+        devices={data.devices}
         setOpenForm={setOpenForm}
-        getAllDevices={getAllDevices}
         deviceId={deviceId}
+        getSingleGate={getSingleGate}
+        isLoading={isLoading}
       />
     </Container>
   );

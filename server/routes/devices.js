@@ -1,5 +1,7 @@
 const express = require("express");
 const Devices = require("../models/devices");
+const Gate = require("../models/gates");
+
 const router = express.Router();
 
 // getting all
@@ -19,15 +21,27 @@ router.get("/", async (req, res) => {
 
 // creating one
 router.post("/", async (req, res) => {
-  const device = new Devices({
-    gateId: req.body.gateId,
-    dateCreated: req.body.dateCreated,
-    status: req.body.status,
-    uid: req.body.uid,
-    vendor: req.body.vendor,
-  });
   try {
+    const gateway = await Gate.findById(req.body.gateId);
+    if (!gateway) {
+      return res.status(404).json({ message: "Gateway not found" });
+    }
+    if (gateway.devices.length >= 10) {
+      return res
+        .status(400)
+        .json({ message: "Maximum number of devices reached" });
+    }
+    const device = new Devices({
+      gateId: req.body.gateId,
+      dateCreated: req.body.dateCreated,
+      status: req.body.status,
+      uid: req.body.uid,
+      vendor: req.body.vendor,
+      gateway: gateway._id,
+    });
     const newDevice = await device.save();
+    gateway.devices.push(newDevice);
+    await gateway.save();
     res.status(201).json(newDevice);
   } catch (err) {
     res.status(400).json({ message: err.message });

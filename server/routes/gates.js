@@ -1,11 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const Gate = require("../models/gates");
+const Devices = require("../models/devices");
 
 // getting all
 router.get("/", async (req, res) => {
   try {
-    const gates = await Gate.find();
+    const gates = await Gate.find().populate("devices");
     res.json(gates);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -13,18 +14,33 @@ router.get("/", async (req, res) => {
 });
 
 // getting One
-router.get("/:id", getGates, (req, res) => {
-  res.send(res.gate);
+router.get("/:id", getGates, async (req, res) => {
+  try {
+    const gateway = await Gate.findById(req.params.id).populate("devices");
+    if (!gateway) {
+      return res.status(404).json({ message: "Gateway not found" });
+    }
+    res.json(gateway);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
 });
 
 // creating one
 router.post("/", async (req, res) => {
-  const gate = new Gate({
-    name: req.body.name,
-    serialNumber: req.body.serialNumber,
-    ipAddress: req.body.ipAddress,
-  });
   try {
+    // Validate the input fields
+    if (!req.body.serialNumber || !req.body.name || !req.body.ipAddress) {
+      return res.status(400).json({ message: "Missing required fields" });
+    }
+
+    const gate = new Gate({
+      name: req.body.name,
+      serialNumber: req.body.serialNumber,
+      ipAddress: req.body.ipAddress,
+    });
+
     const newGate = await gate.save();
     res.status(201).json(newGate);
   } catch (err) {
